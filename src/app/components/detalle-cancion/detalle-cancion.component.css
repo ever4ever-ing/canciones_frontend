@@ -1,0 +1,62 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.btn-volver {
+  display: inline-block;
+  margin-bottom: 2rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-volver:hover {
+  text-decoration: underline;
+}
+
+.detalle-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 2rem;
+  background: #fff;
+}
+
+.detalle-card h1 {
+  margin: 0 0 2rem 0;
+  font-size: 2rem;
+  color: #222;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 1rem;
+}
+
+.info-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-item label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-item span {
+  font-size: 1.1rem;
+  color: #222;
+}
+
+.mensaje-cargando {
+  text-align: center;
+  color: #999;
+  margin-top: 2rem;
+}

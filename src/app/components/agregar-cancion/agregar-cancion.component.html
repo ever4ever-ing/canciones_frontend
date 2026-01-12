@@ -1,0 +1,64 @@
+<div class="container">
+  <a routerLink="/canciones" class="btn-volver">← Volver</a>
+  
+  <div class="formulario-card">
+    <h1>Agregar Canción</h1>
+    
+    <div *ngIf="mensajeError" class="mensaje-error">
+      {{ mensajeError }}
+    </div>
+    
+    <form (ngSubmit)="agregarCancion()">
+      <div class="form-group">
+        <label for="titulo">Título *</label>
+        <input 
+          type="text" 
+          id="titulo" 
+          [(ngModel)]="cancion.titulo" 
+          name="titulo"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="artista">Artista *</label>
+        <input 
+          type="text" 
+          id="artista" 
+          [(ngModel)]="cancion.artista" 
+          name="artista"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="album">Álbum</label>
+        <input 
+          type="text" 
+          id="album" 
+          [(ngModel)]="cancion.album" 
+          name="album">
+      </div>
+      
+      <div class="form-group">
+        <label for="genero">Género</label>
+        <input 
+          type="text" 
+          id="genero" 
+          [(ngModel)]="cancion.genero" 
+          name="genero">
+      </div>
+      
+      <div class="form-group">
+        <label for="idioma">Idioma</label>
+        <input 
+          type="text" 
+          id="idioma" 
+          [(ngModel)]="cancion.idioma" 
+          name="idioma">
+      </div>
+      
+      <button type="submit" class="btn-submit" [disabled]="enviando">
+        {{ enviando ? 'Enviando...' : 'Agregar Canción' }}
+      </button>
+    </form>
+  </div>
+</div>

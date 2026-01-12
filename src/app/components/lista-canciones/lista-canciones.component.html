@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="header">
+    <h1>Canciones</h1>
+    <a routerLink="/canciones/agregar" class="btn-agregar">+ Agregar Canción</a>
+  </div>
+  
+  <div class="canciones-grid">
+    <div class="cancion-card" *ngFor="let cancion of canciones">
+      <h3>{{ cancion.titulo }}</h3>
+      <p class="artista">{{ cancion.artista }}</p>
+      <p class="genero" *ngIf="cancion.genero">{{ cancion.genero }}</p>
+      <div class="botones">
+        <a [routerLink]="['/canciones', cancion.id]" class="btn-detalle">Ver detalle</a>
+        <button (click)="eliminarCancion(cancion.id, cancion.titulo)" class="btn-eliminar">× Eliminar</button>
+      </div>
+    </div>
+  </div>
+  
+  <p *ngIf="canciones.length === 0" class="mensaje-vacio">No hay canciones disponibles</p>
+</div>

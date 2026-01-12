@@ -1,0 +1,31 @@
+<div class="container">
+  <a routerLink="/canciones" class="btn-volver">← Volver</a>
+  
+  <div *ngIf="cancion" class="detalle-card">
+    <h1>{{ cancion.titulo }}</h1>
+    
+    <div class="info-grid">
+      <div class="info-item">
+        <label>Artista:</label>
+        <span>{{ cancion.artista }}</span>
+      </div>
+      
+      <div class="info-item" *ngIf="cancion.album">
+        <label>Álbum:</label>
+        <span>{{ cancion.album }}</span>
+      </div>
+      
+      <div class="info-item" *ngIf="cancion.genero">
+        <label>Género:</label>
+        <span>{{ cancion.genero }}</span>
+      </div>
+      
+      <div class="info-item" *ngIf="cancion.idioma">
+        <label>Idioma:</label>
+        <span>{{ cancion.idioma }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <p *ngIf="!cancion" class="mensaje-cargando">Cargando...</p>
+</div>
