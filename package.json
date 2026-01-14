@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node dist/frontend/server/server.mjs",
+    "dev": "ng serve",
     "build": "ng build",
+    "gcp-build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "serve:ssr:frontend": "node dist/frontend/server/server.mjs"
   },
