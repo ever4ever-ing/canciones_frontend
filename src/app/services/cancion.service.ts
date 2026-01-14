@@ -7,7 +7,7 @@ import { Cancion } from '../models/cancion.model';
   providedIn: 'root'
 })
 export class CancionService {
-  private apiUrl = 'https://34.176.216.198/canciones';
+  private apiUrl = 'http://34.176.216.198/canciones';
 
   constructor(private http: HttpClient) { }
 
