@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cancion } from '../models/cancion.model';
 
@@ -13,7 +13,14 @@ export class CancionService {
 
   obtenerTodasLasCanciones(): Observable<Cancion[]> {
     console.log('📡 GET /canciones');
-    return this.http.get<Cancion[]>(this.apiUrl);
+    const headers = new HttpHeaders({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
+    // Agregar timestamp para evitar caché
+    const url = `${this.apiUrl}?_t=${new Date().getTime()}`;
+    return this.http.get<Cancion[]>(url, { headers });
   }
 
   obtenerCancionPorId(id: number): Observable<Cancion> {
