@@ -21,24 +21,23 @@ export class ListaCancionesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('🎬 ListaCancionesComponent - ngOnInit');
-    // Recargar cada vez que se activa la ruta
+    console.log('ListaCancionesComponent - ngOnInit');
     this.route.params.subscribe(() => {
-      console.log('🔄 Ruta activada - cargando canciones...');
+      console.log('Ruta activada - cargando canciones...');
       this.cargarCanciones();
     });
   }
 
   cargarCanciones(): void {
-    console.log('⏳ Llamando a obtenerTodasLasCanciones()...');
+    console.log('Llamando a obtenerTodasLasCanciones...');
     this.cancionService.obtenerTodasLasCanciones().subscribe({
       next: (data) => {
-        console.log('✅ Ca[...data]; // Crear nuevo array
-        console.log('📦 Array asignado:', this.canciones.length);
-        this.cdr.detectChanges(); // Forzar detección de cambioses recibidas:', data.length, data);
-        this.canciones = data;
+        console.log('Canciones recibidas:', data.length, data);
+        this.canciones = [...data];
+        console.log('Array asignado:', this.canciones.length);
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('❌ Error al cargar:', err)
+      error: (err) => console.error('Error al cargar:', err)
     });
   }
 
