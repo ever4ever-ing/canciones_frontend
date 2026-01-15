@@ -12,14 +12,17 @@ export class CancionService {
   constructor(private http: HttpClient) { }
 
   obtenerTodasLasCanciones(): Observable<Cancion[]> {
+    console.log('📡 GET /canciones');
     return this.http.get<Cancion[]>(this.apiUrl);
   }
 
   obtenerCancionPorId(id: number): Observable<Cancion> {
+    console.log('📡 GET /canciones/detalle/' + id);
     return this.http.get<Cancion>(`${this.apiUrl}/detalle/${id}`);
   }
 
   agregarCancion(cancion: Cancion): Observable<Cancion> {
+    console.log('📡 POST /canciones/procesa/agregar', cancion);
     return this.http.post<Cancion>(`${this.apiUrl}/procesa/agregar`, cancion);
   }
 

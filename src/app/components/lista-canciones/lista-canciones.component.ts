@@ -20,16 +20,22 @@ export class ListaCancionesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('🎬 ListaCancionesComponent - ngOnInit');
     // Recargar cada vez que se activa la ruta
     this.route.params.subscribe(() => {
+      console.log('🔄 Ruta activada - cargando canciones...');
       this.cargarCanciones();
     });
   }
 
   cargarCanciones(): void {
+    console.log('⏳ Llamando a obtenerTodasLasCanciones()...');
     this.cancionService.obtenerTodasLasCanciones().subscribe({
-      next: (data) => this.canciones = data,
-      error: (err) => console.error('Error:', err)
+      next: (data) => {
+        console.log('✅ Canciones recibidas:', data.length, data);
+        this.canciones = data;
+      },
+      error: (err) => console.error('❌ Error al cargar:', err)
     });
   }
 

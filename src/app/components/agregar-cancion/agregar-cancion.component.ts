@@ -48,13 +48,17 @@ export class AgregarCancionComponent {
       idioma: this.cancion.idioma || null
     };
     
+    console.log('➕ Agregando canción:', cancionData);
+    
     this.cancionService.agregarCancion(cancionData).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('✅ Canción agregada - Respuesta:', response);
         this.enviando = false;
+        console.log('🧭 Navegando a /canciones...');
         this.router.navigate(['/canciones']);
       },
       error: (err) => {
-        console.error('Error:', err);
+        console.error('❌ Error al agregar:', err);
         this.mensajeError = 'Error al agregar la canción';
         this.enviando = false;
       }
