@@ -18,6 +18,11 @@ export class ListaCancionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarCanciones();
+    
+    // Suscribirse a cambios en las canciones
+    this.cancionService.cancionAgregada$.subscribe(() => {
+      this.cargarCanciones();
+    });
   }
 
   cargarCanciones(): void {
@@ -35,7 +40,8 @@ export class ListaCancionesComponent implements OnInit {
       this.cancionService.eliminarCancion(id).subscribe({
         next: () => {
           console.log('Canción eliminada exitosamente');
-          window.location.reload();
+          // Recargar la lista sin recargar toda la página
+          this.cargarCanciones();
         },
         error: (err) => console.error('Error al eliminar canción:', err)
       });

@@ -52,10 +52,8 @@ export class AgregarCancionComponent {
       next: (response) => {
         console.log('Canción agregada exitosamente:', response);
         this.enviando = false;
-        // Forzar recarga completa de la ruta
-        this.router.navigate(['/canciones']).then(() => {
-          window.location.reload();
-        });
+        // Navegar a la lista (el Subject actualizará automáticamente la lista)
+        this.router.navigate(['/canciones']);
       },
       error: (err) => {
         console.error('Error al agregar canción:', err);
