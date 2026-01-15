@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CancionService } from '../../services/cancion.service';
@@ -16,7 +16,8 @@ export class ListaCancionesComponent implements OnInit {
 
   constructor(
     private cancionService: CancionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +33,9 @@ export class ListaCancionesComponent implements OnInit {
     console.log('⏳ Llamando a obtenerTodasLasCanciones()...');
     this.cancionService.obtenerTodasLasCanciones().subscribe({
       next: (data) => {
-        console.log('✅ Canciones recibidas:', data.length, data);
+        console.log('✅ Ca[...data]; // Crear nuevo array
+        console.log('📦 Array asignado:', this.canciones.length);
+        this.cdr.detectChanges(); // Forzar detección de cambioses recibidas:', data.length, data);
         this.canciones = data;
       },
       error: (err) => console.error('❌ Error al cargar:', err)
