@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CancionService } from '../../services/cancion.service';
 import { Cancion } from '../../models/cancion.model';
 
@@ -17,19 +16,14 @@ export class ListaCancionesComponent implements OnInit {
 
   constructor(
     private cancionService: CancionService,
-    private router: Router
-  ) {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        if (this.router.url === '/canciones') {
-          this.cargarCanciones();
-        }
-      });
-  }
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.cargarCanciones();
+    // Recargar cada vez que se activa la ruta
+    this.route.params.subscribe(() => {
+      this.cargarCanciones();
+    });
   }
 
   cargarCanciones(): void {
