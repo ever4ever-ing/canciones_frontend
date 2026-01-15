@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CancionService } from '../../services/cancion.service';
 import { Cancion } from '../../models/cancion.model';
 
@@ -13,6 +14,7 @@ import { Cancion } from '../../models/cancion.model';
   styleUrls: ['./agregar-cancion.component.css']
 })
 export class AgregarCancionComponent {
+  private destroyRef = inject(DestroyRef);
   cancion: Cancion = {
     id: 0,
     titulo: '',
@@ -48,18 +50,18 @@ export class AgregarCancionComponent {
       idioma: this.cancion.idioma || null
     };
     
-    this.cancionService.agregarCancion(cancionData).subscribe({
-      next: (response) => {
-        console.log('Canción agregada exitosamente:', response);
-        this.enviando = false;
-        // Navegar a la lista (el Subject actualizará automáticamente la lista)
-        this.router.navigate(['/canciones']);
-      },
-      error: (err) => {
-        console.error('Error al agregar canción:', err);
-        this.mensajeError = 'Error al agregar la canción. Intenta nuevamente.';
-        this.enviando = false;
-      }
-    });
+    this.cancionService.agregarCancion(cancionData)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.enviando = false;
+          this.router.navigate(['/canciones']);
+        },
+        error: (err) => {
+          console.error('Error al agregar canción:', err);
+          this.mensajeError = 'Error al agregar la canción. Intenta nuevamente.';
+          this.enviando = false;
+        }
+      });
   }
 }
