@@ -1,7 +1,7 @@
-import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { CancionService } from '../../services/cancion.service';
 import { Cancion } from '../../models/cancion.model';
 
@@ -14,42 +14,37 @@ import { Cancion } from '../../models/cancion.model';
 })
 export class ListaCancionesComponent implements OnInit {
   canciones: Cancion[] = [];
-  private destroyRef = inject(DestroyRef);
 
-  constructor(private cancionService: CancionService) { }
-
-  ngOnInit(): void {
-    this.cargarCanciones();
-    
-    // Suscribirse a cambios y limpiar automáticamente al destruir el componente
-    this.cancionService.cancionAgregada$
-      .pipe(takeUntilDestroyed(this.destroyRef))
+  constructor(
+    private cancionService: CancionService,
+    private router: Router
+  ) {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.cargarCanciones();
+        if (this.router.url === '/canciones') {
+          this.cargarCanciones();
+        }
       });
   }
 
+  ngOnInit(): void {
+    this.cargarCanciones();
+  }
+
   cargarCanciones(): void {
-    this.cancionService.obtenerTodasLasCanciones()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (data) => {
-          this.canciones = data;
-        },
-        error: (err) => console.error('Error al cargar canciones:', err)
-      });
+    this.cancionService.obtenerTodasLasCanciones().subscribe({
+      next: (data) => this.canciones = data,
+      error: (err) => console.error('Error:', err)
+    });
   }
 
   eliminarCancion(id: number, titulo: string): void {
     if (confirm(`¿Estás seguro de eliminar "${titulo}"?`)) {
-      this.cancionService.eliminarCancion(id)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => {
-            this.cargarCanciones();
-          },
-          error: (err) => console.error('Error al eliminar canción:', err)
-        });
+      this.cancionService.eliminarCancion(id).subscribe({
+        next: () => this.cargarCanciones(),
+        error: (err) => console.error('Error:', err)
+      });
     }
   }
 }
