@@ -21,9 +21,15 @@ export class DetalleCancionComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    console.log('ID recibido en ruta:', id);
     this.cancionService.obtenerCancionPorId(id).subscribe({
-      next: (data) => this.cancion = data,
-      error: (err) => console.error('Error al cargar la canción:', err)
+      next: (data) => {
+        console.log('Respuesta del servicio:', data);
+        this.cancion = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar la canción:', err);
+      }
     });
   }
 }

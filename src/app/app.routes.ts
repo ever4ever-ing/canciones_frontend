@@ -7,5 +7,5 @@ export const routes: Routes = [
   { path: '', redirectTo: '/canciones', pathMatch: 'full' },
   { path: 'canciones', component: ListaCancionesComponent },
   { path: 'canciones/agregar', component: AgregarCancionComponent },
-  { path: 'canciones/:id', component: DetalleCancionComponent }
+  { path: 'canciones/detalle/:id', component: DetalleCancionComponent }
 ];

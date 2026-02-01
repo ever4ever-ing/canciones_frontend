@@ -10,7 +10,7 @@
       <p class="artista">{{ cancion.artista }}</p>
       <p class="genero" *ngIf="cancion.genero">{{ cancion.genero }}</p>
       <div class="botones">
-        <a [routerLink]="['/canciones', cancion.id]" class="btn-detalle">Ver detalle</a>
+        <a [routerLink]="['/canciones', 'detalle', cancion.id]" class="btn-detalle">Ver detalle</a>
         <button (click)="eliminarCancion(cancion.id, cancion.titulo)" class="btn-eliminar">× Eliminar</button>
       </div>
     </div>
